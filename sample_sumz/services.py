@@ -1,9 +1,8 @@
 from sample_sumz.models import Questions
 import xlrd
 
-
-def reading_questions():
-    workbook = xlrd.open_workbook("/home/muhammed/Downloads/Inovics trial.xlsx")
+def reading_questions(excel_file):
+    workbook = xlrd.open_workbook(file_contents=excel_file.read())
     for sheet_name in workbook.sheet_names():
         details = []
         sheet = workbook.sheet_by_name(sheet_name)
@@ -17,6 +16,7 @@ def reading_questions():
             option4 = detail[4].value
             correct_option = detail[5].value
             questions = Questions.objects.create(text=question, option1=option1, option2=option2,
-                                     option3=option3, option4=option4,
-                                     correct_option=correct_option, sheet=sheet_name)
+                                                 option3=option3, option4=option4,
+                                                 correct_option=correct_option, sheet=sheet_name,
+                                                 file_name=excel_file)
     return questions

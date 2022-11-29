@@ -13,5 +13,6 @@ class AddQuestions(View):
 
     def post(self, request, *args, **kwargs):
         if request.method == "POST":
-            questions = reading_questions()
+            excel_file = request.FILES["excel_file"]
+            questions = reading_questions(excel_file)
         return render(request,self.template_name)
